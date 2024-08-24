@@ -1,5 +1,3 @@
-#import <OneSignalFramework/OneSignalFramework.h>
-
 #import "NotificationService.h"
 
 @interface NotificationService ()
@@ -16,13 +14,14 @@
     self.receivedRequest = request;
     self.contentHandler = contentHandler;
     self.bestAttemptContent = [request.content mutableCopy];
-    [OneSignal didReceiveNotificationExtensionRequest:self.receivedRequest
-                       withMutableNotificationContent:self.bestAttemptContent
-                                   withContentHandler:self.contentHandler];
+
+    // Do something with self.bestAttemptContent
+
+    self.contentHandler(self.bestAttemptContent);
+
 }
 
 - (void)serviceExtensionTimeWillExpire {
-    [OneSignal serviceExtensionTimeWillExpireRequest:self.receivedRequest withMutableNotificationContent:self.bestAttemptContent];
     self.contentHandler(self.bestAttemptContent);
 }
 

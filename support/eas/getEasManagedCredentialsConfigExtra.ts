@@ -20,7 +20,7 @@ export default function getEasManagedCredentialsConfigExtra(config: ExpoConfig):
                 bundleIdentifier: `${config?.ios?.bundleIdentifier}.${NSE_TARGET_NAME}`,
                 entitlements: {
                   'com.apple.security.application-groups': [
-                    `group.${config?.ios?.bundleIdentifier}.onesignal`
+                    `group.${config?.ios?.bundleIdentifier}.nse`
                   ]
                 },
               }

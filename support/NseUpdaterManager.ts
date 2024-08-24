@@ -7,8 +7,8 @@ import {
 } from './iosConstants';
 
 // project `ios/OneSignalNotificationServiceExtension` directory
-const entitlementsFileName =`OneSignalNotificationServiceExtension.entitlements`;
-const plistFileName = `OneSignalNotificationServiceExtension-Info.plist`;
+const entitlementsFileName =`NotificationServiceExtension.entitlements`;
+const plistFileName = `NotificationServiceExtension-Info.plist`;
 
 export default class NseUpdaterManager {
   private nsePath = '';

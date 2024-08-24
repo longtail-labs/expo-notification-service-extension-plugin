@@ -5,7 +5,6 @@
 
 import { ConfigPlugin } from '@expo/config-plugins';
 import { OneSignalPluginProps } from '../types/types';
-import { withOneSignalAndroid } from './withOneSignalAndroid';
 import { withOneSignalIos } from './withOneSignalIos';
 import { validatePluginProps } from '../support/helpers';
 
@@ -20,7 +19,6 @@ const withOneSignal: ConfigPlugin<OneSignalPluginProps> = (config, props) => {
   validatePluginProps(props);
 
   config = withOneSignalIos(config, props);
-  config = withOneSignalAndroid(config, props);
 
   return config;
 };

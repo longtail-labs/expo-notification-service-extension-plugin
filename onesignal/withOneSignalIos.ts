@@ -21,7 +21,6 @@ import {
   NSE_EXT_FILES,
   TARGETED_DEVICE_FAMILY
 } from "../support/iosConstants";
-import { updatePodfile } from "../support/updatePodfile";
 import NseUpdaterManager from "../support/NseUpdaterManager";
 import { OneSignalLog } from "../support/OneSignalLog";
 import { FileManager } from "../support/FileManager";
@@ -100,19 +99,6 @@ const withEasManagedCredentials: ConfigPlugin<OneSignalPluginProps> = (config) =
   assert(config.ios?.bundleIdentifier, "Missing 'ios.bundleIdentifier' in app config.")
   config.extra = getEasManagedCredentialsConfigExtra(config as ExpoConfig);
   return config;
-}
-
-const withOneSignalPodfile: ConfigPlugin<OneSignalPluginProps> = (config) => {
-  return withDangerousMod(config, [
-    'ios',
-    async config => {
-      // not awaiting in order to not block main thread
-      const iosRoot = path.join(config.modRequest.projectRoot, "ios")
-      updatePodfile(iosRoot).catch(err => { OneSignalLog.error(err) });
-
-      return config;
-    },
-  ]);
 }
 
 const withOneSignalNSE: ConfigPlugin<OneSignalPluginProps> = (config, props) => {
@@ -227,7 +213,6 @@ export const withOneSignalIos: ConfigPlugin<OneSignalPluginProps> = (config, pro
   config = withAppEnvironment(config, props);
   config = withRemoteNotificationsPermissions(config, props);
   config = withAppGroupPermissions(config, props);
-  config = withOneSignalPodfile(config, props)
   config = withOneSignalNSE(config, props)
   config = withOneSignalXcodeProject(config, props)
   config = withEasManagedCredentials(config, props);

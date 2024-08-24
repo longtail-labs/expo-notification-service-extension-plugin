@@ -103,7 +103,7 @@ const withEasManagedCredentials: ConfigPlugin<OneSignalPluginProps> = (config) =
 
 const withOneSignalNSE: ConfigPlugin<OneSignalPluginProps> = (config, props) => {
   // support for monorepos where node_modules can be above the project directory.
-  const pluginDir = require.resolve("onesignal-expo-plugin/package.json")
+  const pluginDir = require.resolve("expo-notification-service-extension-plugin/package.json")
   const sourceDir = path.join(pluginDir, "../build/support/serviceExtensionFiles/")
 
   return withDangerousMod(config, [

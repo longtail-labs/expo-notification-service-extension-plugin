@@ -1,7 +1,7 @@
 {
-  "name": "onesignal-expo-plugin",
-  "version": "2.0.3",
-  "description": "The OneSignal Expo plugin allows you to use OneSignal without leaving the managed workflow. Developed in collaboration with SweetGreen.",
+  "name": "expo-notification-service-extension-plugin",
+  "version": "0.0.1",
+  "description": "Expo plugin that expects a notification service extension file as an input and copies it to XCode binaries",
   "main": "./app.plugin.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,16 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OneSignal/onesignal-expo-plugin.git"
+    "url": "git+https://github.com/nikwebr/expo-notification-service-extension-plugin"
   },
   "keywords": [
     "expo",
-    "onesignal",
     "push",
     "notifications",
-    "EAS"
+    "notification service extension"
   ],
-  "author": "rgomezp",
+  "author": "nikwebr",
   "contributors": [
     "Karen Grigoryan",
     "Rodrigo Gomez-Palacio",
@@ -29,10 +28,6 @@
     "Brian Smith"
   ],
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/OneSignal/onesignal-expo-plugin/issues"
-  },
-  "homepage": "https://github.com/OneSignal/onesignal-expo-plugin#readme",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",

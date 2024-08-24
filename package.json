@@ -1,6 +1,6 @@
 {
   "name": "expo-notification-service-extension-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Expo plugin that expects a notification service extension file as an input and copies it to XCode binaries",
   "main": "./app.plugin.js",
   "scripts": {

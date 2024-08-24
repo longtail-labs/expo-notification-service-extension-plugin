@@ -1,1 +1,1 @@
-module.exports = require('./build/onesignal/withServiceExtension.js');
+module.exports = require('./build/plugin/withServiceExtension.js');

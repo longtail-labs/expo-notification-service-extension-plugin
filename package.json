@@ -11,22 +11,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nikwebr/expo-notification-service-extension-plugin"
+    "url": "git+https://github.com/nikwebr/expo-notification-service-extension-plugin.git"
   },
   "keywords": [
     "expo",
     "push",
     "notifications",
-    "notification service extension"
+    "notification service extension",
+    "nse"
   ],
   "author": "nikwebr",
-  "contributors": [
-    "Karen Grigoryan",
-    "Rodrigo Gomez-Palacio",
-    "Charlie Cruzan",
-    "Wojciech Kozyra",
-    "Brian Smith"
-  ],
   "license": "MIT",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.10.1",

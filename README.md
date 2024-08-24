@@ -1,7 +1,7 @@
 <h1 align="center">Welcome to the expo-notification-service-extension-plugin 👋</h1>
 <p>
-  <a href="https://www.npmjs.com/package/onesignal-expo-plugin" target="_blank">
-    <img alt="Version" src="https://img.shields.io/npm/v/onesignal-expo-plugin.svg">
+  <a href="https://www.npmjs.com/package/expo-notification-service-extension-plugin" target="_blank">
+    <img alt="Version" src="https://img.shields.io/npm/v/expo-notification-service-extension-plugin.svg">
   </a>
   <a href="https://github.com/nikwebr/expo-notification-service-extension-plugin#readme" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
@@ -30,16 +30,15 @@ This plugin is an [Expo Config Plugin](https://docs.expo.dev/guides/config-plugi
 ---
 
 ## Install
-You need both the `onesignal-expo-plugin` *and* the `react-native-onesignal` npm package.
 
 ```sh
-npx expo install onesignal-expo-plugin
+npx expo install expo-notification-service-extension-plugin
 
 # npm
-npm install react-native-onesignal
+npm install expo-notification-service-extension-plugin
 
 # yarn
-yarn add react-native-onesignal
+yarn add expo-notification-service-extension-plugin
 ```
 
 ## Configuration in app.json / app.config.js
@@ -54,6 +53,7 @@ Add the plugin to the **front** of the [plugin array](https://docs.expo.dev/vers
       "expo-notification-service-extension-plugin",
       {
         "mode": "development",
+        "iosNSEFilePath": "./assets/NotificationService.m"
       }
     ]
   ]
@@ -70,7 +70,8 @@ export default {
     [
       "expo-notification-service-extension-plugin",
       {
-        mode: "development",
+        mode: "development", 
+        iosNSEFilePath: "./assets/NotificationService.m"
       }
     ]
   ]
@@ -115,6 +116,12 @@ npx expo run:ios
 
 # Build and run your native Android project
 npx expo run:android
+```
+
+
+## Publishing new version
+```sh
+npm publish --access public 
 ```
 
 ---

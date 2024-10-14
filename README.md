@@ -16,11 +16,13 @@
 
 > The Expo Notification Service Extension plugin allows you to add a Notification Service Extension file while staying in the managed workflow.
 
-* 🏠 [Homepage](https://github.com/nikwebr/expo-notification-service-extension-plugin#readme)
+* 🏠 [Homepage](https://checkokay.com/blog/nse)
 * 🖤 [npm](https://www.npmjs.com/package/expo-notification-service-extension-plugin)
 
 ## Overview
 This plugin is an [Expo Config Plugin](https://docs.expo.dev/guides/config-plugins/). It extends the Expo config to allow customizing the prebuild phase of managed workflow builds (no need to eject to a bare workflow).
+
+You can find a blog post demonstrating its usage [here](https://checkokay.com/blog/nse).
 
 ## Supported environments:
 * [The Expo run commands](https://docs.expo.dev/workflow/customizing/) (`expo run:[android|ios]`)

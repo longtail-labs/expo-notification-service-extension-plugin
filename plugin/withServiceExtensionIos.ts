@@ -133,7 +133,7 @@ const withOneSignalNSE: ConfigPlugin<NSEPluginProps> = (config, props) => {
 
       /* MODIFY COPIED EXTENSION FILES */
       const nseUpdater = new NseUpdaterManager(iosPath);
-      await nseUpdater.updateNSEEntitlements(`group.${config.ios?.bundleIdentifier}.nse`)
+      await nseUpdater.updateNSEEntitlements(`group.${config.ios?.bundleIdentifier}.nse`, props?.filtering)
       await nseUpdater.updateNSEBundleVersion(config.ios?.buildNumber ?? DEFAULT_BUNDLE_VERSION);
       await nseUpdater.updateNSEBundleShortVersion(config?.version ?? DEFAULT_BUNDLE_SHORT_VERSION);
 

@@ -10,6 +10,10 @@ export function validatePluginProps(props: any): void {
     throw new Error("NSE Expo Plugin: 'iosNSEFilePath' must be a string.");
   }
 
+  if (props.filtering && typeof props.filtering !== "boolean") {
+    throw new Error("NSE Expo Plugin: 'filtering' must be a boolean.");
+  }
+
   if (props.devTeam && typeof props.devTeam !== "string") {
     throw new Error("NSE Expo Plugin: 'devTeam' must be a string.");
   }

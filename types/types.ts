@@ -14,6 +14,13 @@ export type NSEPluginProps = {
      */
     iosNSEFilePath: string;
 
+
+    /**
+     * (optional) This will enable the Notification Service Extension to filter and modify incoming push notifications before they
+     * appear on the user's device. Requires com.apple.developer.usernotifications.filtering entitlement.
+     */
+    filtering: boolean;
+
     /**
      * (optional) Used to configure Apple Team ID. You can find your Apple Team ID by running expo credentials:manager e.g: "91SW8A37CR"
      */
@@ -29,6 +36,7 @@ export type NSEPluginProps = {
 export const NSE_PLUGIN_PROPS: string[] = [
     "mode",
     "iosNSEFilePath",
+    "filtering",
     "devTeam",
     "iPhoneDeploymentTarget"
 ];

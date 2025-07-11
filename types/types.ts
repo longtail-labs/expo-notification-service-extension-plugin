@@ -8,12 +8,16 @@ export type NSEPluginProps = {
     mode: Mode;
 
     /**
-     * (required) The local path to a custom Notification Service Extension (NSE), written in Objective-C. The NSE will typically start as a copy
-     * of the default NSE found at (support/serviceExtensionFiles/NotificationService.m, then altered to support any custom
+     * (required) The local path to a custom Notification Service Extension (NSE), written in Objective-C or Swift. The NSE will typically start as a copy
+     * of the default NSE found at (support/serviceExtensionFiles/NotificationService.m or NotificationService.swift), then altered to support any custom
      * logic required.
      */
     iosNSEFilePath: string;
 
+    /**
+     * (optional) Language for the NSE. "objc" for Objective-C or "swift" for Swift. Defaults to "objc" for backwards compatibility.
+     */
+    language?: Language;
 
     /**
      * (optional) This will enable the Notification Service Extension to filter and modify incoming push notifications before they
@@ -36,6 +40,7 @@ export type NSEPluginProps = {
 export const NSE_PLUGIN_PROPS: string[] = [
     "mode",
     "iosNSEFilePath",
+    "language",
     "filtering",
     "devTeam",
     "iPhoneDeploymentTarget"
@@ -44,4 +49,9 @@ export const NSE_PLUGIN_PROPS: string[] = [
 export enum Mode {
     Dev = "development",
     Prod = "production"
+}
+
+export enum Language {
+    ObjC = "objc",
+    Swift = "swift"
 }

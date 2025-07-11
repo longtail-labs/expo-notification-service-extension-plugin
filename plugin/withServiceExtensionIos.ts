@@ -17,13 +17,15 @@ import {
   IPHONEOS_DEPLOYMENT_TARGET,
   NSE_TARGET_NAME,
   NSE_SOURCE_FILE,
+  NSE_SWIFT_SOURCE_FILE,
   NSE_EXT_FILES,
+  NSE_SWIFT_EXT_FILES,
   TARGETED_DEVICE_FAMILY
 } from "../support/iosConstants";
 import NseUpdaterManager from "../support/NseUpdaterManager";
 import { Log } from "../support/Log";
 import { FileManager } from "../support/FileManager";
-import { NSEPluginProps } from "../types/types";
+import { NSEPluginProps, Language } from "../types/types";
 import assert from 'assert';
 import getEasManagedCredentialsConfigExtra from "../support/eas/getEasManagedCredentialsConfigExtra";
 import { ExpoConfig } from '@expo/config-types';
@@ -47,7 +49,7 @@ const withAppEnvironment: ConfigPlugin<NSEPluginProps> = (
     if (onesignalProps?.iosNSEFilePath == null) {
       throw new Error(`
         Missing required "iosNSEFilePath" key in your app.json or app.config.js file for "expo-notification-service-extension-plugin".
-        "iosNSEFilePath" must point to a local Notification Service file written in objective-c.
+        "iosNSEFilePath" must point to a local Notification Service file written in objective-c or swift.
         Please see expo-notification-service-extension-plugin's README.md for more details.`
       )
     }
@@ -116,19 +118,24 @@ const withOneSignalNSE: ConfigPlugin<NSEPluginProps> = (config, props) => {
     'ios',
     async config => {
       const iosPath = path.join(config.modRequest.projectRoot, "ios")
+      const language = props.language ?? Language.ObjC;
+      const isSwift = language === Language.Swift;
 
       /* COPY OVER EXTENSION FILES */
       fs.mkdirSync(`${iosPath}/${NSE_TARGET_NAME}`, { recursive: true });
 
-      for (let i = 0; i < NSE_EXT_FILES.length; i++) {
-        const extFile = NSE_EXT_FILES[i];
+      // Copy appropriate extension files based on language
+      const extFiles = isSwift ? NSE_SWIFT_EXT_FILES : NSE_EXT_FILES;
+      for (let i = 0; i < extFiles.length; i++) {
+        const extFile = extFiles[i];
         const targetFile = `${iosPath}/${NSE_TARGET_NAME}/${extFile}`;
         await FileManager.copyFile(`${sourceDir}${extFile}`, targetFile);
       }
 
       // Copy NSE source file either from configuration-provided location, falling back to the default one.
-      const sourcePath = props.iosNSEFilePath ?? `${sourceDir}${NSE_SOURCE_FILE}`
-      const targetFile = `${iosPath}/${NSE_TARGET_NAME}/${NSE_SOURCE_FILE}`;
+      const defaultSourceFile = isSwift ? NSE_SWIFT_SOURCE_FILE : NSE_SOURCE_FILE;
+      const sourcePath = props.iosNSEFilePath ?? `${sourceDir}${defaultSourceFile}`;
+      const targetFile = `${iosPath}/${NSE_TARGET_NAME}/${defaultSourceFile}`;
       await FileManager.copyFile(`${sourcePath}`, targetFile);
 
       /* MODIFY COPIED EXTENSION FILES */
@@ -145,6 +152,8 @@ const withOneSignalNSE: ConfigPlugin<NSEPluginProps> = (config, props) => {
 const withOneSignalXcodeProject: ConfigPlugin<NSEPluginProps> = (config, props) => {
   return withXcodeProject(config, newConfig => {
     const xcodeProject = newConfig.modResults
+    const language = props.language ?? Language.ObjC;
+    const isSwift = language === Language.Swift;
 
     if (!!xcodeProject.pbxTargetByName(NSE_TARGET_NAME)) {
       Log.log(`${NSE_TARGET_NAME} already exists in project. Skipping...`);
@@ -152,7 +161,9 @@ const withOneSignalXcodeProject: ConfigPlugin<NSEPluginProps> = (config, props) 
     }
 
     // Create new PBXGroup for the extension
-    const extGroup = xcodeProject.addPbxGroup([...NSE_EXT_FILES, NSE_SOURCE_FILE], NSE_TARGET_NAME, NSE_TARGET_NAME);
+    const extFiles = isSwift ? NSE_SWIFT_EXT_FILES : NSE_EXT_FILES;
+    const sourceFile = isSwift ? NSE_SWIFT_SOURCE_FILE : NSE_SOURCE_FILE;
+    const extGroup = xcodeProject.addPbxGroup([...extFiles, sourceFile], NSE_TARGET_NAME, NSE_TARGET_NAME);
 
     // Add the new PBXGroup to the top level group. This makes the
     // files / folder appear in the file explorer in Xcode.
@@ -177,7 +188,7 @@ const withOneSignalXcodeProject: ConfigPlugin<NSEPluginProps> = (config, props) 
 
     // Add build phases to the new target
     xcodeProject.addBuildPhase(
-      ["NotificationService.m"],
+      [sourceFile],
       "PBXSourcesBuildPhase",
       "Sources",
       nseTarget.uuid
@@ -205,6 +216,12 @@ const withOneSignalXcodeProject: ConfigPlugin<NSEPluginProps> = (config, props) 
         buildSettingsObj.TARGETED_DEVICE_FAMILY = TARGETED_DEVICE_FAMILY;
         buildSettingsObj.CODE_SIGN_ENTITLEMENTS = `${NSE_TARGET_NAME}/${NSE_TARGET_NAME}.entitlements`;
         buildSettingsObj.CODE_SIGN_STYLE = "Automatic";
+        
+        // Add Swift-specific settings
+        if (isSwift) {
+          buildSettingsObj.SWIFT_VERSION = "5.0";
+          buildSettingsObj.CLANG_ENABLE_MODULES = "YES";
+        }
       }
     }
 

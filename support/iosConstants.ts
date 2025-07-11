@@ -18,8 +18,13 @@ export const DEFAULT_BUNDLE_SHORT_VERSION = '1.0';
 
 export const NSE_TARGET_NAME = "NotificationServiceExtension";
 export const NSE_SOURCE_FILE = "NotificationService.m"
+export const NSE_SWIFT_SOURCE_FILE = "NotificationService.swift"
 export const NSE_EXT_FILES = [
   "NotificationService.h",
+  `${NSE_TARGET_NAME}.entitlements`,
+  `${NSE_TARGET_NAME}-Info.plist`
+];
+export const NSE_SWIFT_EXT_FILES = [
   `${NSE_TARGET_NAME}.entitlements`,
   `${NSE_TARGET_NAME}-Info.plist`
 ];
